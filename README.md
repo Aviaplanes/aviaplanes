@@ -1,5 +1,18 @@
-https://0xavia.xyz
+<div align="center">
 
-[![Discord Shield](https://discordapp.com/api/guilds/1009590475344330914/widget.png?style=shield)](https://discord.gg/z5j6quvKj6)
+  <!-- Беджи (Сайт + Дискорд) в одну линию -->
+  <a href="https://0xavia.xyz">
+    <img src="https://img.shields.io/badge/Website-0xavia.xyz-bd93f9?style=flat&logo=googlechrome&logoColor=white" alt="Website" />
+  </a>
+  <a href="https://discord.gg/z5j6quvKj6">
+    <img src="https://discordapp.com/api/guilds/1009590475344330914/widget.png?style=shield" alt="Discord Shield" />
+  </a>
 
-[![Top Langs](https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=Aviaplanes&layout=compact&theme=dracula)](https://github.com/anuraghazra/github-readme-stats)
+  <br><br>
+
+  <!-- Карточка статистики -->
+  <a href="https://github.com/anuraghazra/github-readme-stats">
+    <img src="https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=Aviaplanes&layout=compact&theme=dracula" alt="Top Langs" />
+  </a>
+
+</div>
