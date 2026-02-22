@@ -1,6 +1,5 @@
 <div align="center">
 
-  <!-- Беджи (Сайт + Дискорд) в одну линию -->
   <a href="https://0xavia.xyz">
     <img src="https://img.shields.io/badge/Website-0xavia.xyz-bd93f9?style=flat&logo=googlechrome&logoColor=white" alt="Website" />
   </a>
@@ -10,7 +9,6 @@
 
   <br><br>
 
-  <!-- Карточка статистики -->
   <a href="https://github.com/anuraghazra/github-readme-stats">
     <img src="https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=Aviaplanes&layout=compact&theme=dracula" alt="Top Langs" />
   </a>
