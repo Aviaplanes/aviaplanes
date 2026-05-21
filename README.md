@@ -10,8 +10,7 @@
 
   <br><br>
 
-  <a href="https://github.com/anuraghazra/github-readme-stats">
-    <img src="https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=Aviaplanes&layout=compact&theme=dracula" alt="Top Langs" />
-  </a>
+  <!-- Кастомная готическая панель языков -->
+  <img src="./langs.svg" alt="System Languages" />
 
 </div>
