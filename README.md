@@ -11,7 +11,7 @@
   <br><br>
 
   <a href="https://github.com/anuraghazra/github-readme-stats">
-    <img src="https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=Aviaplanes&layout=compact&hide_border=true&bg_color=0d1117&title_color=ff3333&text_color=c9d1d9&icon_color=ff3333" alt="Top Langs" />
+    <img src="https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=Aviaplanes&layout=compact&theme=dracula" alt="Top Langs" />
   </a>
 
 </div>
