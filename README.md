@@ -11,6 +11,6 @@
   <br><br>
 
   <!-- Кастомная готическая панель языков -->
-  <img src="./langs.svg" alt="System Languages" />
+<img src="langs.svg" alt="System Languages" />
 
 </div>
