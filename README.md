@@ -1,16 +1,17 @@
 <div align="center">
 
   <a href="https://0xavia.xyz">
-    <img src="https://img.shields.io/badge/Website-0xavia.xyz-bd93f9?style=flat&logo=googlechrome&logoColor=white" alt="Website" />
+    <img src="https://img.shields.io/badge/Website-0xavia.xyz-ff3333?style=flat-square&logo=googlechrome&logoColor=white" alt="Website" />
   </a>
+  
   <a href="https://discord.gg/z5j6quvKj6">
-    <img src="https://discordapp.com/api/guilds/1009590475344330914/widget.png?style=shield" alt="Discord Shield" />
+    <img src="https://img.shields.io/discord/1009590475344330914?color=ff3333&label=Discord&logo=discord&logoColor=white&style=flat-square" alt="Discord" />
   </a>
 
   <br><br>
 
   <a href="https://github.com/anuraghazra/github-readme-stats">
-    <img src="https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=Aviaplanes&layout=compact&theme=dracula" alt="Top Langs" />
+    <img src="https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=Aviaplanes&layout=compact&hide_border=true&bg_color=0d1117&title_color=ff3333&text_color=c9d1d9&icon_color=ff3333" alt="Top Langs" />
   </a>
 
 </div>
