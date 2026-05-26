@@ -1,60 +1,60 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="500" height="260" viewBox="0 0 500 260">
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="280" viewBox="0 0 500 280">
   <defs>
-    <!-- Стили и Анимации -->
     <style>
-      /* Анимация заполнения полос */
-      @keyframes fillPython { from { width: 0; } to { width: 237px; } }
-      @keyframes fillJS { from { width: 0; } to { width: 40px; } }
-      @keyframes fillRust { from { width: 0; } to { width: 3px; } }
-      
-      .bar-python { animation: fillPython 1.5s cubic-bezier(0.1, 0.8, 0.2, 1) forwards; }
-      .bar-js { animation: fillJS 1.5s cubic-bezier(0.1, 0.8, 0.2, 1) 0.2s forwards; width: 0; }
-      .bar-rust { animation: fillRust 1.5s cubic-bezier(0.1, 0.8, 0.2, 1) 0.4s forwards; width: 0; }
+      <![CDATA[
+        /* Анимации заполнения полос (Обновлены под новые проценты) */
+        /* Общая ширина шкалы = 270px */
+        @keyframes fillRust { from { width: 0; } to { width: 234.2px; } }   /* 86.73% */
+        @keyframes fillPython { from { width: 0; } to { width: 22.8px; } }  /* 8.45% */
+        @keyframes fillJS { from { width: 0; } to { width: 13px; } }        /* 4.82% */
+        
+        .bar-rust { animation: fillRust 1.5s cubic-bezier(0.1, 0.8, 0.2, 1) forwards; }
+        .bar-python { animation: fillPython 1.5s cubic-bezier(0.1, 0.8, 0.2, 1) 0.2s forwards; width: 0; }
+        .bar-js { animation: fillJS 1.5s cubic-bezier(0.1, 0.8, 0.2, 1) 0.4s forwards; width: 0; }
 
-      /* Глитч эффект для заголовка */
-      @keyframes glitch {
-        0% { transform: translate(0); }
-        20% { transform: translate(-2px, 2px); }
-        40% { transform: translate(-2px, -2px); }
-        60% { transform: translate(2px, 2px); }
-        80% { transform: translate(2px, -2px); }
-        100% { transform: translate(0); }
-      }
-      .glitch-text {
-        animation: glitch 3s infinite;
-      }
-      .glitch-layer-1 {
-        fill: #ff0000;
-        opacity: 0.8;
-        clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
-        transform: translate(-2px, -1px);
-        animation: glitch 2s infinite reverse;
-      }
-      .glitch-layer-2 {
-        fill: #ffffff;
-        opacity: 0.8;
-        clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
-        transform: translate(2px, 1px);
-        animation: glitch 2.5s infinite;
-      }
+        /* Хроматический глитч */
+        @keyframes glitch-anim {
+          0% { clip-path: inset(40% 0 61% 0); transform: translate(-2px, 2px); }
+          20% { clip-path: inset(92% 0 1% 0); transform: translate(1px, -1px); }
+          40% { clip-path: inset(43% 0 1% 0); transform: translate(-1px, 3px); }
+          60% { clip-path: inset(25% 0 58% 0); transform: translate(3px, 1px); }
+          80% { clip-path: inset(54% 0 7% 0); transform: translate(-3px, -2px); }
+          100% { clip-path: inset(58% 0 43% 0); transform: translate(2px, -3px); }
+        }
+        .glitch-cyan {
+          fill: #00ffff;
+          opacity: 0.6;
+          animation: glitch-anim 3s infinite linear alternate-reverse;
+          mix-blend-mode: screen;
+        }
+        .glitch-magenta {
+          fill: #ff00ff;
+          opacity: 0.6;
+          animation: glitch-anim 2s infinite linear alternate;
+          mix-blend-mode: screen;
+        }
 
-      /* Мигание курсора */
-      @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-      .cursor { animation: blink 1s step-end infinite; }
+        /* Мигание курсора */
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        .cursor { animation: blink 1s step-end infinite; }
 
-      /* Hover эффекты */
-      .lang-row { transition: all 0.3s ease; cursor: pointer; }
-      .lang-row:hover .lang-name { fill: #ff3333; filter: drop-shadow(0 0 5px #ff0000); }
-      .lang-row:hover .bar-bg { stroke: #ff3333; }
-      
-      /* Движение сканлайна */
-      @keyframes scan {
-        0% { transform: translateY(-100%); }
-        100% { transform: translateY(260px); }
-      }
-      .scanline {
-        animation: scan 4s linear infinite;
-      }
+        /* Hover эффекты */
+        .lang-row { transition: all 0.3s ease; cursor: crosshair; }
+        .lang-row:hover .lang-name { fill: #ff3333; filter: drop-shadow(0 0 5px #ff0000); }
+        .lang-row:hover .bar-bg { stroke: #ff3333; fill: #1a0000; }
+        .lang-row:hover .icon-outer { fill: #ffffff; filter: drop-shadow(0 0 5px #fff); }
+        
+        /* Движение сканлайна */
+        @keyframes scan {
+          0% { transform: translateY(-20px); }
+          100% { transform: translateY(280px); }
+        }
+        .scanline { animation: scan 4s linear infinite; pointer-events: none; }
+        
+        /* Пульсация фона */
+        @keyframes pulse { 0%, 100% { opacity: 0.03; } 50% { opacity: 0.08; } }
+        .bg-pulse { animation: pulse 4s ease-in-out infinite; }
+      ]]>
     </style>
 
     <!-- Градиенты -->
@@ -64,133 +64,195 @@
       <stop offset="100%" stop-color="#000" />
     </linearGradient>
 
-    <linearGradient id="bar-python" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#ff3333" />
-      <stop offset="100%" stop-color="#8b0000" />
+    <linearGradient id="bar-rust-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#555" />
+      <stop offset="80%" stop-color="#ddd" />
+      <stop offset="100%" stop-color="#ffffff" />
     </linearGradient>
 
-    <linearGradient id="bar-js" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#cc2222" />
-      <stop offset="100%" stop-color="#5a0000" />
+    <linearGradient id="bar-python-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#5a0000" />
+      <stop offset="80%" stop-color="#ff3333" />
+      <stop offset="100%" stop-color="#ffffff" />
     </linearGradient>
 
-    <linearGradient id="bar-rust" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#fff" />
-      <stop offset="100%" stop-color="#888" />
+    <linearGradient id="bar-js-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3a0000" />
+      <stop offset="80%" stop-color="#cc2222" />
+      <stop offset="100%" stop-color="#ffaaaa" />
     </linearGradient>
 
     <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#0d0000" />
-      <stop offset="100%" stop-color="#050000" />
+      <stop offset="0%" stop-color="#0a0000" />
+      <stop offset="50%" stop-color="#050202" />
+      <stop offset="100%" stop-color="#0a0000" />
     </linearGradient>
 
-    <!-- Паттерн сетки -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+      <stop offset="50%" stop-color="#000" stop-opacity="0" />
+      <stop offset="100%" stop-color="#000" stop-opacity="0.8" />
+    </radialGradient>
+
+    <!-- Паттерны -->
     <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#2a0000" stroke-width="0.5" opacity="0.3"/>
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#2a0000" stroke-width="0.5" opacity="0.4"/>
+    </pattern>
+    
+    <pattern id="crt" width="4" height="4" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="4" y2="0" stroke="#000" stroke-width="1" opacity="0.2"/>
     </pattern>
 
     <!-- Фильтры -->
-    <filter id="glow-red">
-      <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
-      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    <filter id="glow-red" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="glow-white" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="blur" />
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
     
     <filter id="noise">
       <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/>
-      <feColorMatrix type="matrix" values="1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 0.1 0" />
+      <feColorMatrix type="matrix" values="1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 0.05 0" />
     </filter>
   </defs>
 
-  <!-- ФОН -->
+  <!-- ================= ФОН ================= -->
   <rect width="100%" height="100%" fill="url(#bg-gradient)" />
   <rect width="100%" height="100%" fill="url(#grid)" />
-  <rect width="100%" height="100%" filter="url(#noise)" opacity="0.1" />
+  
+  <!-- Готическая роза (фон) -->
+  <g stroke="#ff0000" fill="none" opacity="0.05" transform="translate(250, 140)">
+    <circle cx="0" cy="0" r="120" stroke-width="1"/>
+    <circle cx="0" cy="0" r="100" stroke-width="0.5" stroke-dasharray="4 4"/>
+    <circle cx="0" cy="0" r="80" stroke-width="2"/>
+    <path d="M0,-120 L0,120 M-120,0 L120,0 M-85,-85 L85,85 M-85,85 L85,-85" stroke-width="1"/>
+    <polygon points="0,-100 70.7,-70.7 100,0 70.7,70.7 0,100 -70.7,70.7 -100,0 -70.7,-70.7" stroke-width="1"/>
+  </g>
+  <circle cx="250" cy="140" r="140" fill="#ff0000" class="bg-pulse" filter="url(#glow-red)"/>
 
-  <!-- Анимированные частицы (Искры) -->
+  <rect width="100%" height="100%" fill="url(#vignette)" />
+  <rect width="100%" height="100%" filter="url(#noise)" opacity="0.5" style="pointer-events: none;" />
+
+  <!-- ================= ЧАСТИЦЫ ================= -->
+  <g fill="#ff3333" filter="url(#glow-red)" style="pointer-events: none;">
+    <circle cx="80" cy="280" r="1.5"><animate attributeName="cy" from="280" to="-20" dur="6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.8;0" dur="6s" repeatCount="indefinite"/></circle>
+    <circle cx="200" cy="280" r="1"><animate attributeName="cy" from="280" to="-20" dur="8s" begin="1.5s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.5;0" dur="8s" begin="1.5s" repeatCount="indefinite"/></circle>
+    <circle cx="320" cy="280" r="2"><animate attributeName="cy" from="280" to="-20" dur="5s" begin="0.5s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.7;0" dur="5s" begin="0.5s" repeatCount="indefinite"/></circle>
+    <circle cx="430" cy="280" r="1.5"><animate attributeName="cy" from="280" to="-20" dur="7s" begin="2.5s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.9;0" dur="7s" begin="2.5s" repeatCount="indefinite"/></circle>
+  </g>
+
+  <!-- ================= РАМКИ ================= -->
+  <rect x="10" y="10" width="480" height="260" fill="none" stroke="#3a0000" stroke-width="1" />
+  <rect x="14" y="14" width="472" height="252" fill="none" stroke="#ff3333" stroke-width="1.5" filter="url(#glow-red)" opacity="0.7" />
+  <rect x="20" y="20" width="460" height="240" fill="none" stroke="#5a0000" stroke-width="1" stroke-dasharray="2 4" />
+
+  <!-- Угловые орнаменты -->
   <g fill="#ff3333" filter="url(#glow-red)">
-    <circle cx="50" cy="260" r="1.5"><animate attributeName="cy" from="260" to="-10" dur="5s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0" dur="5s" repeatCount="indefinite"/></circle>
-    <circle cx="150" cy="260" r="1"><animate attributeName="cy" from="260" to="-10" dur="7s" begin="1s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.8;0" dur="7s" begin="1s" repeatCount="indefinite"/></circle>
-    <circle cx="350" cy="260" r="2"><animate attributeName="cy" from="260" to="-10" dur="6s" begin="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.6;0" dur="6s" begin="2s" repeatCount="indefinite"/></circle>
-    <circle cx="450" cy="260" r="1.5"><animate attributeName="cy" from="260" to="-10" dur="4s" begin="0.5s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0" dur="4s" begin="0.5s" repeatCount="indefinite"/></circle>
+    <polygon points="14,14 34,14 14,34" />
+    <polygon points="14,14 22,14 14,22" fill="#fff" opacity="0.8"/>
+    <line x1="34" y1="14" x2="50" y2="14" stroke="#ff3333" stroke-width="1"/>
+    <polygon points="50,14 53,11 56,14 53,17" fill="#8b0000"/>
+    
+    <polygon points="486,14 466,14 486,34" />
+    <polygon points="486,14 478,14 486,22" fill="#fff" opacity="0.8"/>
+    <line x1="466" y1="14" x2="450" y2="14" stroke="#ff3333" stroke-width="1"/>
+    <polygon points="450,14 447,11 444,14 447,17" fill="#8b0000"/>
+    
+    <polygon points="14,266 34,266 14,246" />
+    <polygon points="14,266 22,266 14,258" fill="#fff" opacity="0.8"/>
+    <line x1="34" y1="266" x2="50" y2="266" stroke="#ff3333" stroke-width="1"/>
+    <polygon points="50,266 53,263 56,266 53,269" fill="#8b0000"/>
+    
+    <polygon points="486,266 466,266 486,246" />
+    <polygon points="486,266 478,266 486,258" fill="#fff" opacity="0.8"/>
+    <line x1="466" y1="266" x2="450" y2="266" stroke="#ff3333" stroke-width="1"/>
+    <polygon points="450,266 447,263 444,266 447,269" fill="#8b0000"/>
   </g>
 
-  <!-- РАМКИ -->
-  <rect x="8" y="8" width="484" height="244" fill="none" stroke="#ff3333" stroke-width="1.5" filter="url(#glow-red)" opacity="0.8" />
-  <rect x="14" y="14" width="472" height="232" fill="none" stroke="#5a0000" stroke-width="1" stroke-dasharray="4,3" />
-
-  <!-- УГЛЫ (Готика) -->
-  <g fill="#ff3333" filter="url(#glow-red)">
-    <polygon points="8,8 28,8 8,28" />
-    <polygon points="492,8 472,8 492,28" />
-    <polygon points="8,252 28,252 8,232" />
-    <polygon points="492,252 472,252 492,232" />
-  </g>
-  <!-- Белые акценты углов -->
-  <g fill="#fff" opacity="0.8">
-    <polygon points="8,8 16,8 8,16" />
-    <polygon points="492,8 484,8 492,16" />
-    <polygon points="8,252 16,252 8,244" />
-    <polygon points="492,252 484,252 492,244" />
-  </g>
-
-  <!-- ЗАГОЛОВОК С ГЛИТЧЕМ -->
+  <!-- ================= ЗАГОЛОВОК ================= -->
   <g transform="translate(250, 45)">
-    <!-- Слой глитча 1 -->
-    <text class="glitch-layer-1" x="0" y="0" font-family="'Courier New', monospace" font-size="18" font-weight="bold" text-anchor="middle" letter-spacing="6">SYSTEM // LANGUAGES</text>
-    <!-- Слой глитча 2 -->
-    <text class="glitch-layer-2" x="0" y="0" font-family="'Courier New', monospace" font-size="18" font-weight="bold" text-anchor="middle" letter-spacing="6">SYSTEM // LANGUAGES</text>
-    <!-- Основной текст -->
-    <text class="glitch-text" x="0" y="0" font-family="'Courier New', monospace" font-size="18" font-weight="bold" fill="#fff" text-anchor="middle" letter-spacing="6" filter="url(#glow-red)">SYSTEM // LANGUAGES</text>
+    <text class="glitch-cyan" x="0" y="0" font-family="'Courier New', monospace" font-size="16" font-weight="bold" text-anchor="middle" letter-spacing="4">SYSTEM // LANGUAGES</text>
+    <text class="glitch-magenta" x="0" y="0" font-family="'Courier New', monospace" font-size="16" font-weight="bold" text-anchor="middle" letter-spacing="4">SYSTEM // LANGUAGES</text>
+    <text x="0" y="0" font-family="'Courier New', monospace" font-size="16" font-weight="bold" fill="#fff" text-anchor="middle" letter-spacing="4" filter="url(#glow-red)">SYSTEM // LANGUAGES</text>
   </g>
 
-  <text x="250" y="62" font-family="'Courier New', monospace" font-size="9" fill="#5a0000" letter-spacing="3" text-anchor="middle">ᚷᛟᛏᚺᛁᚲ · ᚱᚢᚾᛖᛋ · ᚨᚲᛏᛁᚹᛖ</text>
+  <text x="250" y="62" font-family="'Courier New', monospace" font-size="8" fill="#5a0000" letter-spacing="2" text-anchor="middle">[0x8F2A] ᚷᛟᛏᚺᛁᚲ · ᚱᚢᚾᛖᛋ · ᚨᚲᛏᛁᚹᛖ [SYS_OK]</text>
   
   <line x1="40" y1="75" x2="460" y2="75" stroke="url(#red-glow)" stroke-width="1" />
+  <polygon points="250,72 254,75 250,78 246,75" fill="#ff3333" filter="url(#glow-red)"/>
 
-  <!-- СТРОКИ ЯЗЫКОВ -->
-
-  <!-- Python -->
-  <g class="lang-row" transform="translate(35, 110)">
-    <polygon points="0,-5 5,0 0,5 -5,0" fill="#ff3333" filter="url(#glow-red)" />
-    <polygon points="0,-2 2,0 0,2 -2,0" fill="#fff" />
-    <text class="lang-name" x="15" y="4" font-family="'Courier New', monospace" font-size="13" font-weight="bold" fill="#ddd" letter-spacing="1">Python</text>
-    <text x="100" y="4" font-family="'Courier New', monospace" font-size="12" fill="#ff3333" font-weight="bold">84.62%</text>
-    <rect class="cursor" x="145" y="-6" width="6" height="12" fill="#ff3333" opacity="0.7"/>
+  <!-- ================= ДАННЫЕ ================= -->
+  
+  <!-- Rust (Теперь основной язык - 86.73%) -->
+  <g class="lang-row" transform="translate(35, 115)">
+    <polygon class="icon-outer" points="0,-6 6,0 0,6 -6,0" fill="#fff" filter="url(#glow-white)" transition="all 0.3s"/>
+    <polygon points="0,-2.5 2.5,0 0,2.5 -2.5,0" fill="#ff3333" />
     
-    <rect class="bar-bg" x="170" y="-6" width="280" height="10" fill="#050505" stroke="#2a0000" stroke-width="1" />
-    <rect class="bar-python" x="170" y="-6" height="10" fill="url(#bar-python)" filter="url(#glow-red)" />
+    <text class="lang-name" x="18" y="4" font-family="'Courier New', monospace" font-size="13" font-weight="bold" fill="#fff" letter-spacing="1" filter="url(#glow-white)">Rust</text>
+    
+    <!-- text-anchor="end" гарантирует, что проценты не наедут на название -->
+    <text x="155" y="4" font-family="'Courier New', monospace" font-size="12" fill="#fff" font-weight="bold" text-anchor="end" filter="url(#glow-white)">86.73%</text>
+    <rect class="cursor" x="162" y="-6" width="6" height="13" fill="#fff" opacity="0.8"/>
+    
+    <rect class="bar-bg" x="180" y="-6" width="270" height="12" fill="#050202" stroke="#2a0000" stroke-width="1" rx="2"/>
+    <rect class="bar-rust" x="180" y="-6" height="12" fill="url(#bar-rust-grad)" rx="2" filter="url(#glow-white)"/>
+    
+    <path d="M180,10 v3 M247.5,10 v3 M315,10 v3 M382.5,10 v3 M450,10 v3" stroke="#3a0000" stroke-width="1"/>
+    <text x="180" y="22" font-family="'Courier New', monospace" font-size="6" fill="#555" text-anchor="middle">0</text>
+    <text x="315" y="22" font-family="'Courier New', monospace" font-size="6" fill="#555" text-anchor="middle">50</text>
+    <text x="450" y="22" font-family="'Courier New', monospace" font-size="6" fill="#555" text-anchor="middle">100</text>
   </g>
 
-  <!-- JavaScript -->
-  <g class="lang-row" transform="translate(35, 150)">
-    <polygon points="0,-5 5,0 0,5 -5,0" fill="#8b0000" />
-    <polygon points="0,-2 2,0 0,2 -2,0" fill="#cc4444" />
-    <text class="lang-name" x="15" y="4" font-family="'Courier New', monospace" font-size="13" font-weight="bold" fill="#ddd" letter-spacing="1">JavaScript</text>
-    <text x="100" y="4" font-family="'Courier New', monospace" font-size="12" fill="#cc4444" font-weight="bold">14.19%</text>
-    <rect class="cursor" x="145" y="-6" width="6" height="12" fill="#cc4444" opacity="0.7"/>
-
-    <rect class="bar-bg" x="170" y="-6" width="280" height="10" fill="#050505" stroke="#2a0000" stroke-width="1" />
-    <rect class="bar-js" x="170" y="-6" height="10" fill="url(#bar-js)" />
+  <!-- Python (8.45%) -->
+  <g class="lang-row" transform="translate(35, 160)">
+    <polygon class="icon-outer" points="0,-6 6,0 0,6 -6,0" fill="#ff3333" filter="url(#glow-red)" transition="all 0.3s"/>
+    <polygon points="0,-2.5 2.5,0 0,2.5 -2.5,0" fill="#fff" />
+    
+    <text class="lang-name" x="18" y="4" font-family="'Courier New', monospace" font-size="13" font-weight="bold" fill="#ddd" letter-spacing="1">Python</text>
+    
+    <text x="155" y="4" font-family="'Courier New', monospace" font-size="12" fill="#ff3333" font-weight="bold" text-anchor="end">8.45%</text>
+    <rect class="cursor" x="162" y="-6" width="6" height="13" fill="#ff3333" opacity="0.8"/>
+    
+    <rect class="bar-bg" x="180" y="-6" width="270" height="12" fill="#050202" stroke="#2a0000" stroke-width="1" rx="2"/>
+    <rect class="bar-python" x="180" y="-6" height="12" fill="url(#bar-python-grad)" rx="2" filter="url(#glow-red)"/>
+    
+    <path d="M180,10 v3 M247.5,10 v3 M315,10 v3 M382.5,10 v3 M450,10 v3" stroke="#3a0000" stroke-width="1"/>
   </g>
 
-  <!-- Rust -->
-  <g class="lang-row" transform="translate(35, 190)">
-    <polygon points="0,-5 5,0 0,5 -5,0" fill="#fff" filter="url(#glow-red)" />
-    <polygon points="0,-2 2,0 0,2 -2,0" fill="#ff3333" />
-    <text class="lang-name" x="15" y="4" font-family="'Courier New', monospace" font-size="13" font-weight="bold" fill="#fff" letter-spacing="1">Rust</text>
-    <text x="100" y="4" font-family="'Courier New', monospace" font-size="12" fill="#fff" font-weight="bold">0.67%</text>
-    <rect class="cursor" x="140" y="-6" width="6" height="12" fill="#fff" opacity="0.7"/>
-
-    <rect class="bar-bg" x="170" y="-6" width="280" height="10" fill="#050505" stroke="#2a0000" stroke-width="1" />
-    <rect class="bar-rust" x="170" y="-6" height="10" fill="url(#bar-rust)" filter="url(#glow-red)" />
+  <!-- JavaScript (4.82%) -->
+  <g class="lang-row" transform="translate(35, 205)">
+    <polygon class="icon-outer" points="0,-6 6,0 0,6 -6,0" fill="#8b0000" transition="all 0.3s"/>
+    <polygon points="0,-2.5 2.5,0 0,2.5 -2.5,0" fill="#cc4444" />
+    
+    <text class="lang-name" x="18" y="4" font-family="'Courier New', monospace" font-size="13" font-weight="bold" fill="#ddd" letter-spacing="1">JavaScript</text>
+    
+    <text x="155" y="4" font-family="'Courier New', monospace" font-size="12" fill="#cc4444" font-weight="bold" text-anchor="end">4.82%</text>
+    <rect class="cursor" x="162" y="-6" width="6" height="13" fill="#cc4444" opacity="0.8"/>
+    
+    <rect class="bar-bg" x="180" y="-6" width="270" height="12" fill="#050202" stroke="#2a0000" stroke-width="1" rx="2"/>
+    <rect class="bar-js" x="180" y="-6" height="12" fill="url(#bar-js-grad)" rx="2"/>
+    
+    <path d="M180,10 v3 M247.5,10 v3 M315,10 v3 M382.5,10 v3 M450,10 v3" stroke="#3a0000" stroke-width="1"/>
   </g>
 
-  <!-- ФУТЕР -->
-  <line x1="40" y1="225" x2="460" y2="225" stroke="url(#red-glow)" stroke-width="1" />
-  <text x="250" y="242" font-family="'Courier New', monospace" font-size="8" fill="#3a0000" letter-spacing="2" text-anchor="middle">// NO MERCY · PROPRIETARY · LOCKED //</text>
+  <!-- ================= ФУТЕР ================= -->
+  <line x1="40" y1="235" x2="460" y2="235" stroke="url(#red-glow)" stroke-width="1" />
+  
+  <g transform="translate(40, 252)">
+    <text x="0" y="0" font-family="'Courier New', monospace" font-size="9" fill="#5a0000" letter-spacing="1">> EXECUTING PROFILER...</text>
+    <text x="155" y="0" font-family="'Courier New', monospace" font-size="9" fill="#ff3333" letter-spacing="1" filter="url(#glow-red)">[NO MERCY · LOCKED]</text>
+    <rect class="cursor" x="285" y="-9" width="5" height="10" fill="#ff3333"/>
+  </g>
 
-  <!-- СКАНЛАЙН (Поверх всего) -->
-  <rect class="scanline" width="100%" height="20" fill="url(#red-glow)" opacity="0.05" style="pointer-events: none;" />
-  <line class="scanline" x1="0" y1="0" x2="500" y2="0" stroke="#ff3333" stroke-width="1" opacity="0.3" style="pointer-events: none;" />
+  <!-- ================= OVERLAYS ================= -->
+  <rect width="100%" height="100%" fill="url(#crt)" style="pointer-events: none;" />
+  
+  <g class="scanline">
+    <rect width="100%" height="30" fill="url(#red-glow)" opacity="0.05" />
+    <line x1="0" y1="0" x2="500" y2="0" stroke="#ff3333" stroke-width="1" opacity="0.4" />
+  </g>
 
 </svg>
