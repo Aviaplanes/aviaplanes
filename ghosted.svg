@@ -1,0 +1,257 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 1000 320" width="1000" height="320" role="img" aria-label="ghosted">
+  <title>ghosted</title>
+  <desc>Светящаяся надпись ghosted на стеклянной панели: призрачное дыхание букв, бегущий блик, мягкие орбы света.</desc>
+
+  <defs>
+    <!-- ======== градиенты ======== -->
+    <radialGradient id="bg" cx="50%" cy="36%" r="80%">
+      <stop offset="0" stop-color="#161b28"/>
+      <stop offset="0.55" stop-color="#0b0e17"/>
+      <stop offset="1" stop-color="#05070c"/>
+    </radialGradient>
+
+    <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.08"/>
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.02"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0.06"/>
+    </linearGradient>
+
+    <linearGradient id="topGloss" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+
+    <linearGradient id="ink" gradientUnits="userSpaceOnUse" x1="0" y1="92" x2="0" y2="224">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#d9e2f1"/>
+    </linearGradient>
+
+    <!-- бегущий блик по всему слову -->
+    <linearGradient id="sheen" gradientUnits="userSpaceOnUse" x1="170" y1="0" x2="830" y2="0">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+      <animateTransform attributeName="gradientTransform" type="translate"
+        values="-700 0; 700 0; 700 0" keyTimes="0; 0.4; 1" dur="8s" repeatCount="indefinite"/>
+    </linearGradient>
+
+    <radialGradient id="floorGlow">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="orbA">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.5"/>
+      <stop offset="0.55" stop-color="#c9dcff" stop-opacity="0.15"/>
+      <stop offset="1" stop-color="#c9dcff" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="orbB">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.4"/>
+      <stop offset="0.55" stop-color="#e4ebff" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#e4ebff" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- ======== фильтры ======== -->
+    <filter id="haze" x="-90%" y="-90%" width="280%" height="280%">
+      <feGaussianBlur stdDeviation="30"/>
+    </filter>
+
+    <filter id="soft" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+
+    <!-- дышащее свечение: сам blur анимируется -->
+    <filter id="glow" x="-45%" y="-90%" width="190%" height="280%">
+      <feGaussianBlur stdDeviation="15">
+        <animate attributeName="stdDeviation" values="13;24;13" dur="6.5s" repeatCount="indefinite"
+          calcMode="spline" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"/>
+      </feGaussianBlur>
+    </filter>
+
+    <clipPath id="panelClip">
+      <rect x="64" y="40" width="872" height="246" rx="52"/>
+    </clipPath>
+
+    <!-- ======== слово: каждая буква — призрак со своей фазой ======== -->
+    <g id="word" font-family="'Segoe UI','SF Pro Display','Helvetica Neue',-apple-system,Arial,sans-serif"
+       font-size="134" font-weight="300" text-anchor="middle">
+
+      <g opacity="0">
+        <animate attributeName="opacity" begin="0.55s" dur="1s" values="0;1" fill="freeze"
+          calcMode="spline" keySplines="0.2 0.7 0.2 1"/>
+        <g>
+          <animateTransform attributeName="transform" type="translate" additive="sum"
+            begin="0.55s" dur="1.1s" values="0 22; 0 0" fill="freeze"
+            calcMode="spline" keySplines="0.2 0.7 0.2 1"/>
+          <animateTransform attributeName="transform" type="translate" additive="sum"
+            begin="0s" dur="5.6s" values="0 0; 0 -7; 0 0" repeatCount="indefinite"
+            calcMode="spline" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"/>
+          <text x="140" y="196">g<animate attributeName="opacity" values="1;0.55;1" dur="5.6s"
+            begin="-0.4s" repeatCount="indefinite" calcMode="spline"
+            keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"/></text>
+        </g>
+      </g>
+
+      <g opacity="0">
+        <animate attributeName="opacity" begin="0.67s" dur="1s" values="0;1" fill="freeze"
+          calcMode="spline" keySplines="0.2 0.7 0.2 1"/>
+        <g>
+          <animateTransform attributeName="transform" type="translate" additive="sum"
+            begin="0.67s" dur="1.1s" values="0 22; 0 0" fill="freeze"
+            calcMode="spline" keySplines="0.2 0.7 0.2 1"/>
+          <animateTransform attributeName="transform" type="translate" additive="sum"
+            begin="-0.8s" dur="5.6s" values="0 0; 0 -6; 0 0" repeatCount="indefinite"
+            calcMode="spline" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"/>
+          <text x="260" y="196">h<animate attributeName="opacity" values="1;0.6;1" dur="6.3s"
+            begin="-2.1s" repeatCount="indefinite" calcMode="spline"
+            keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"/></text>
+        </g>
+      </g>
+
+      <g opacity="0">
+        <animate attributeName="opacity" begin="0.79s" dur="1s" values="0;1" fill="freeze"
+          calcMode="spline" keySplines="0.2 0.7 0.2 1"/>
+        <g>
+          <animateTransform attributeName="transform" type="translate" additive="sum"
+            begin="0.79s" dur="1.1s" values="0 22; 0 0" fill="freeze"
+            calcMode="spline" keySplines="0.2 0.7 0.2 1"/>
+          <animateTransform attributeName="transform" type="translate" additive="sum"
+            begin="-1.6s" dur="5.6s" values="0 0; 0 -8; 0 0" repeatCount="indefinite"
+            calcMode="spline" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"/>
+          <text x="380" y="196">o<animate attributeName="opacity" values="1;0.5;1" dur="5.1s"
+            begin="-1.2s" repeatCount="indefinite" calcMode="spline"
+            keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"/></text>
+        </g>
+      </g>
+
+      <g opacity="0">
+        <animate attributeName="opacity" begin="0.91s" dur="1s" values="0;1" fill="freeze"
+          calcMode="spline" keySplines="0.2 0.7 0.2 1"/>
+        <g>
+          <animateTransform attributeName="transform" type="translate" additive="sum"
+            begin="0.91s" dur="1.1s" values="0 22; 0 0" fill="freeze"
+            calcMode="spline" keySplines="0.2 0.7 0.2 1"/>
+          <animateTransform attributeName="transform" type="translate" additive="sum"
+            begin="-2.4s" dur="5.6s" values="0 0; 0 -7; 0 0" repeatCount="indefinite"
+            calcMode="spline" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"/>
+          <text x="500" y="196">s<animate attributeName="opacity" values="1;0.62;1" dur="6.9s"
+            begin="-3.3s" repeatCount="indefinite" calcMode="spline"
+            keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"/></text>
+        </g>
+      </g>
+
+      <g opacity="0">
+        <animate attributeName="opacity" begin="1.03s" dur="1s" values="0;1" fill="freeze"
+          calcMode="spline" keySplines="0.2 0.7 0.2 1"/>
+        <g>
+          <animateTransform attributeName="transform" type="translate" additive="sum"
+            begin="1.03s" dur="1.1s" values="0 22; 0 0" fill="freeze"
+            calcMode="spline" keySplines="0.2 0.7 0.2 1"/>
+          <animateTransform attributeName="transform" type="translate" additive="sum"
+            begin="-3.2s" dur="5.6s" values="0 0; 0 -6; 0 0" repeatCount="indefinite"
+            calcMode="spline" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"/>
+          <text x="620" y="196">t<animate attributeName="opacity" values="1;0.58;1" dur="5.4s"
+            begin="-0.7s" repeatCount="indefinite" calcMode="spline"
+            keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"/></text>
+        </g>
+      </g>
+
+      <g opacity="0">
+        <animate attributeName="opacity" begin="1.15s" dur="1s" values="0;1" fill="freeze"
+          calcMode="spline" keySplines="0.2 0.7 0.2 1"/>
+        <g>
+          <animateTransform attributeName="transform" type="translate" additive="sum"
+            begin="1.15s" dur="1.1s" values="0 22; 0 0" fill="freeze"
+            calcMode="spline" keySplines="0.2 0.7 0.2 1"/>
+          <animateTransform attributeName="transform" type="translate" additive="sum"
+            begin="-4s" dur="5.6s" values="0 0; 0 -8; 0 0" repeatCount="indefinite"
+            calcMode="spline" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"/>
+          <text x="740" y="196">e<animate attributeName="opacity" values="1;0.52;1" dur="6.1s"
+            begin="-4.5s" repeatCount="indefinite" calcMode="spline"
+            keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"/></text>
+        </g>
+      </g>
+
+      <g opacity="0">
+        <animate attributeName="opacity" begin="1.27s" dur="1s" values="0;1" fill="freeze"
+          calcMode="spline" keySplines="0.2 0.7 0.2 1"/>
+        <g>
+          <animateTransform attributeName="transform" type="translate" additive="sum"
+            begin="1.27s" dur="1.1s" values="0 22; 0 0" fill="freeze"
+            calcMode="spline" keySplines="0.2 0.7 0.2 1"/>
+          <animateTransform attributeName="transform" type="translate" additive="sum"
+            begin="-4.8s" dur="5.6s" values="0 0; 0 -7; 0 0" repeatCount="indefinite"
+            calcMode="spline" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"/>
+          <text x="860" y="196">d<animate attributeName="opacity" values="1;0.6;1" dur="5.9s"
+            begin="-1.9s" repeatCount="indefinite" calcMode="spline"
+            keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"/></text>
+        </g>
+      </g>
+    </g>
+  </defs>
+
+  <!-- фон -->
+  <rect width="1000" height="320" rx="26" fill="url(#bg)"/>
+
+  <!-- орбы света, дрейфующие за матовым стеклом -->
+  <g clip-path="url(#panelClip)" opacity="0">
+    <animate attributeName="opacity" begin="0.35s" dur="1.6s" values="0;1" fill="freeze"/>
+    <circle r="150" fill="url(#orbA)" filter="url(#haze)">
+      <animateMotion dur="26s" repeatCount="indefinite"
+        path="M310,150 C400,70 560,80 610,150 C660,220 500,250 380,220 C260,190 230,210 310,150 Z"/>
+    </circle>
+    <circle r="95" fill="url(#orbB)" filter="url(#haze)">
+      <animateMotion dur="19s" repeatCount="indefinite"
+        path="M700,120 C780,80 860,140 805,190 C750,240 625,230 612,170 C600,112 625,158 700,120 Z"/>
+    </circle>
+    <circle r="62" fill="url(#orbA)" filter="url(#haze)">
+      <animateMotion dur="31s" repeatCount="indefinite"
+        path="M470,236 C545,216 625,246 558,258 C492,270 398,262 418,244 C438,226 420,246 470,236 Z"/>
+    </circle>
+  </g>
+
+  <!-- мягкая подсветка под словом -->
+  <g opacity="0">
+    <animate attributeName="opacity" begin="1.2s" dur="2s" values="0;1" fill="freeze"/>
+    <ellipse cx="500" cy="240" rx="310" ry="30" fill="url(#floorGlow)" opacity="0.3">
+      <animate attributeName="opacity" values="0.3;0.65;0.3" dur="6.5s" repeatCount="indefinite"
+        calcMode="spline" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"/>
+    </ellipse>
+  </g>
+
+  <!-- стеклянная панель -->
+  <g opacity="0">
+    <animate attributeName="opacity" begin="0.15s" dur="1.2s" values="0;1" fill="freeze"/>
+    <rect x="64" y="40" width="872" height="246" rx="52" fill="url(#glass)"
+      stroke="#ffffff" stroke-opacity="0.09" stroke-width="1.5"/>
+    <rect x="80" y="48" width="840" height="88" rx="40" fill="url(#topGloss)"/>
+  </g>
+
+  <!-- слово: отражение + дышащее свечение + буквы + бегущий блик -->
+  <g>
+    <animateTransform attributeName="transform" type="translate" values="0 0; 0 -5; 0 0" dur="9s"
+      repeatCount="indefinite" calcMode="spline" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"/>
+    <animate attributeName="opacity" values="1;0.75;1" dur="12s" repeatCount="indefinite"
+      calcMode="spline" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"/>
+
+    <!-- отражение в стекле -->
+    <g clip-path="url(#panelClip)">
+      <use xlink:href="#word" href="#word" transform="translate(0,322) scale(1,-0.4)"
+        fill="#ffffff" opacity="0.08" filter="url(#soft)"/>
+    </g>
+
+    <!-- дышащее свечение -->
+    <use xlink:href="#word" href="#word" fill="#ffffff" filter="url(#glow)" opacity="0.5">
+      <animate attributeName="opacity" values="0.38;0.8;0.38" dur="6.5s" repeatCount="indefinite"
+        calcMode="spline" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"/>
+    </use>
+
+    <!-- сами буквы -->
+    <use xlink:href="#word" href="#word" fill="url(#ink)"/>
+
+    <!-- бегущий блик -->
+    <use xlink:href="#word" href="#word" fill="url(#sheen)"/>
+  </g>
+</svg>
