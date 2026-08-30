@@ -4,13 +4,11 @@
   <desc>Ультражирная светящаяся надпись ghosted. на прозрачном фоне: призрачное дыхание букв, бегущий блик и красный эффект клика.</desc>
 
   <defs>
-    <!-- вертикальный градиент букв -->
     <linearGradient id="ink" gradientUnits="userSpaceOnUse" x1="0" y1="100" x2="0" y2="224">
       <stop offset="0" stop-color="#ffffff"/>
       <stop offset="1" stop-color="#dbe4f2"/>
     </linearGradient>
 
-    <!-- бегущий блик по слову -->
     <linearGradient id="sheen" gradientUnits="userSpaceOnUse" x1="110" y1="0" x2="900" y2="0">
       <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
       <stop offset="0.5" stop-color="#ffffff" stop-opacity="1"/>
@@ -19,7 +17,6 @@
         values="-790 0; 790 0; 790 0" keyTimes="0; 0.4; 1" dur="8s" repeatCount="indefinite"/>
     </linearGradient>
 
-    <!-- дышащее свечение: сам blur анимируется -->
     <filter id="glow" x="-45%" y="-90%" width="190%" height="280%">
       <feGaussianBlur stdDeviation="15">
         <animate attributeName="stdDeviation" values="13;24;13" dur="6.5s" repeatCount="indefinite"
@@ -27,17 +24,16 @@
       </feGaussianBlur>
     </filter>
 
-    <!-- свечение для красного эффекта клика -->
-    <filter id="rippleGlow" x="-200%" y="-200%" width="500%" height="500%">
-      <feGaussianBlur stdDeviation="6" result="blur"/>
+    <filter id="rippleGlow" x="-150%" y="-150%" width="400%" height="400%" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur1"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur2"/>
       <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="blur"/>
+        <feMergeNode in="blur2"/>
+        <feMergeNode in="blur1"/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
 
-    <!-- слово: каждая буква — призрак со своей фазой -->
     <g id="word" font-family="'Segoe UI','SF Pro Display','Helvetica Neue',-apple-system,Arial,sans-serif"
        font-size="120" font-weight="900" text-anchor="middle">
 
@@ -153,7 +149,6 @@
         </g>
       </g>
 
-      <!-- точка -->
       <g opacity="0">
         <animate attributeName="opacity" begin="1.39s" dur="1s" values="0;1" fill="freeze"
           calcMode="spline" keySplines="0.2 0.7 0.2 1"/>
@@ -172,68 +167,66 @@
     </g>
   </defs>
 
-  <!-- слово: дышащее свечение + сами буквы + бегущий блик -->
+  <!-- CSS-анимация волны — GPU-ускоренная через transform+opacity -->
+  <style>
+    @keyframes ripple-expand {
+      0%   { r: 2px; opacity: 0.95; stroke-width: 12px; }
+      100% { r: var(--ripple-r); opacity: 0; stroke-width: 0.5px; }
+    }
+    .ripple-ring {
+      animation: ripple-expand 0.85s cubic-bezier(0.15, 0.6, 0.35, 1) forwards;
+      will-change: r, opacity, stroke-width;
+    }
+  </style>
+
   <g>
     <animateTransform attributeName="transform" type="translate" values="0 0; 0 -5; 0 0" dur="9s"
       repeatCount="indefinite" calcMode="spline" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"/>
     <animate attributeName="opacity" values="1;0.75;1" dur="12s" repeatCount="indefinite"
       calcMode="spline" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"/>
 
-    <!-- дышащее свечение -->
     <use xlink:href="#word" href="#word" fill="#ffffff" filter="url(#glow)" opacity="0.5">
       <animate attributeName="opacity" values="0.38;0.8;0.38" dur="6.5s" repeatCount="indefinite"
         calcMode="spline" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"/>
     </use>
 
-    <!-- сами буквы: кликабельная поверхность для эффекта капли -->
     <use id="letters" xlink:href="#word" href="#word" fill="url(#ink)" style="cursor:pointer"/>
-
-    <!-- бегущий блик -->
     <use xlink:href="#word" href="#word" fill="url(#sheen)" pointer-events="none"/>
   </g>
 
-  <!-- слой для эффекта клика -->
-  <g id="clickLayer" pointer-events="none"></g>
+  <g id="clickLayer" pointer-events="none"/>
 
   <script type="text/javascript"><![CDATA[
     (function () {
-      var svg = document.currentScript.ownerSVGElement || document.currentScript.closest('svg');
+      var svg = document.currentScript
+        ? document.currentScript.ownerSVGElement || document.currentScript.closest('svg')
+        : document.querySelector('svg');
       if (!svg) return;
-      var NS = "http://www.w3.org/2000/svg";
+
+      var NS = 'http://www.w3.org/2000/svg';
       var letters = svg.getElementById('letters');
-      var layer = svg.getElementById('clickLayer');
+      var layer   = svg.getElementById('clickLayer');
       if (!letters || !layer) return;
 
       function toSvgPoint(evt) {
-        var pt = svg.createSVGPoint();
+        var pt  = svg.createSVGPoint();
         pt.x = evt.clientX;
         pt.y = evt.clientY;
         var ctm = svg.getScreenCTM();
         if (!ctm) return { x: 0, y: 0 };
-        var loc = pt.matrixTransform(ctm.inverse());
-        return { x: loc.x, y: loc.y };
+        var p = pt.matrixTransform(ctm.inverse());
+        return { x: p.x, y: p.y };
       }
 
       function maxRadius(x, y) {
         var vb = svg.viewBox.baseVal;
-        var corners = [
-          { x: vb.x, y: vb.y },
-          { x: vb.x + vb.width, y: vb.y },
-          { x: vb.x, y: vb.y + vb.height },
-          { x: vb.x + vb.width, y: vb.y + vb.height }
-        ];
-        var maxD = 0;
-        corners.forEach(function (c) {
-          var d = Math.hypot(c.x - x, c.y - y);
-          if (d > maxD) maxD = d;
-        });
-        return maxD;
+        var dx = Math.max(x - vb.x, vb.x + vb.width  - x);
+        var dy = Math.max(y - vb.y, vb.y + vb.height - y);
+        return Math.ceil(Math.hypot(dx, dy)) + 20;
       }
 
       function spawnRipple(x, y) {
         var r = maxRadius(x, y);
-
-        var g = document.createElementNS(NS, 'g');
 
         var ring = document.createElementNS(NS, 'circle');
         ring.setAttribute('cx', x);
@@ -241,47 +234,19 @@
         ring.setAttribute('r', 2);
         ring.setAttribute('fill', 'none');
         ring.setAttribute('stroke', '#ff2b3d');
-        ring.setAttribute('stroke-width', 10);
+        ring.setAttribute('stroke-width', 12);
         ring.setAttribute('filter', 'url(#rippleGlow)');
-        ring.setAttribute('opacity', '0.95');
+        ring.style.setProperty('--ripple-r', r + 'px');
+        ring.classList.add('ripple-ring');
 
-        var animR = document.createElementNS(NS, 'animate');
-        animR.setAttribute('attributeName', 'r');
-        animR.setAttribute('from', '2');
-        animR.setAttribute('to', r);
-        animR.setAttribute('dur', '0.9s');
-        animR.setAttribute('calcMode', 'spline');
-        animR.setAttribute('keySplines', '0.15 0.6 0.35 1');
-        animR.setAttribute('fill', 'freeze');
+        layer.appendChild(ring);
 
-        var animO = document.createElementNS(NS, 'animate');
-        animO.setAttribute('attributeName', 'opacity');
-        animO.setAttribute('from', '0.95');
-        animO.setAttribute('to', '0');
-        animO.setAttribute('dur', '0.9s');
-        animO.setAttribute('fill', 'freeze');
-
-        var animW = document.createElementNS(NS, 'animate');
-        animW.setAttribute('attributeName', 'stroke-width');
-        animW.setAttribute('from', '12');
-        animW.setAttribute('to', '0.5');
-        animW.setAttribute('dur', '0.9s');
-        animW.setAttribute('fill', 'freeze');
-
-        ring.appendChild(animR);
-        ring.appendChild(animO);
-        ring.appendChild(animW);
-        g.appendChild(ring);
-        layer.appendChild(g);
-
-        var removed = false;
-        function cleanup() {
-          if (removed) return;
-          removed = true;
-          if (g.parentNode) g.parentNode.removeChild(g);
-        }
-        animR.addEventListener('endEvent', cleanup);
-        setTimeout(cleanup, 1200);
+        ring.addEventListener('animationend', function () {
+          if (ring.parentNode) ring.parentNode.removeChild(ring);
+        });
+        setTimeout(function () {
+          if (ring.parentNode) ring.parentNode.removeChild(ring);
+        }, 1200);
       }
 
       letters.addEventListener('click', function (evt) {
