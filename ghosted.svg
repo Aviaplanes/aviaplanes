@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      viewBox="0 0 1000 320" width="1000" height="320" role="img" aria-label="ghosted.">
   <title>ghosted.</title>
-  <desc>Ультражирная светящаяся надпись ghosted. на прозрачном фоне: призрачное дыхание букв и бегущий блик.</desc>
+  <desc>Ультражирная светящаяся надпись ghosted. на прозрачном фоне: призрачное дыхание букв, бегущий блик и красный эффект клика.</desc>
 
   <defs>
     <!-- вертикальный градиент букв -->
@@ -25,6 +25,16 @@
         <animate attributeName="stdDeviation" values="13;24;13" dur="6.5s" repeatCount="indefinite"
           calcMode="spline" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"/>
       </feGaussianBlur>
+    </filter>
+
+    <!-- свечение для красного эффекта клика -->
+    <filter id="rippleGlow" x="-200%" y="-200%" width="500%" height="500%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
     </filter>
 
     <!-- слово: каждая буква — призрак со своей фазой -->
@@ -175,10 +185,109 @@
         calcMode="spline" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"/>
     </use>
 
-    <!-- сами буквы -->
-    <use xlink:href="#word" href="#word" fill="url(#ink)"/>
+    <!-- сами буквы: кликабельная поверхность для эффекта капли -->
+    <use id="letters" xlink:href="#word" href="#word" fill="url(#ink)" style="cursor:pointer"/>
 
     <!-- бегущий блик -->
-    <use xlink:href="#word" href="#word" fill="url(#sheen)"/>
+    <use xlink:href="#word" href="#word" fill="url(#sheen)" pointer-events="none"/>
   </g>
+
+  <!-- слой для эффекта клика -->
+  <g id="clickLayer" pointer-events="none"></g>
+
+  <script type="text/javascript"><![CDATA[
+    (function () {
+      var svg = document.currentScript.ownerSVGElement || document.currentScript.closest('svg');
+      if (!svg) return;
+      var NS = "http://www.w3.org/2000/svg";
+      var letters = svg.getElementById('letters');
+      var layer = svg.getElementById('clickLayer');
+      if (!letters || !layer) return;
+
+      function toSvgPoint(evt) {
+        var pt = svg.createSVGPoint();
+        pt.x = evt.clientX;
+        pt.y = evt.clientY;
+        var ctm = svg.getScreenCTM();
+        if (!ctm) return { x: 0, y: 0 };
+        var loc = pt.matrixTransform(ctm.inverse());
+        return { x: loc.x, y: loc.y };
+      }
+
+      function maxRadius(x, y) {
+        var vb = svg.viewBox.baseVal;
+        var corners = [
+          { x: vb.x, y: vb.y },
+          { x: vb.x + vb.width, y: vb.y },
+          { x: vb.x, y: vb.y + vb.height },
+          { x: vb.x + vb.width, y: vb.y + vb.height }
+        ];
+        var maxD = 0;
+        corners.forEach(function (c) {
+          var d = Math.hypot(c.x - x, c.y - y);
+          if (d > maxD) maxD = d;
+        });
+        return maxD;
+      }
+
+      function spawnRipple(x, y) {
+        var r = maxRadius(x, y);
+
+        var g = document.createElementNS(NS, 'g');
+
+        var ring = document.createElementNS(NS, 'circle');
+        ring.setAttribute('cx', x);
+        ring.setAttribute('cy', y);
+        ring.setAttribute('r', 2);
+        ring.setAttribute('fill', 'none');
+        ring.setAttribute('stroke', '#ff2b3d');
+        ring.setAttribute('stroke-width', 10);
+        ring.setAttribute('filter', 'url(#rippleGlow)');
+        ring.setAttribute('opacity', '0.95');
+
+        var animR = document.createElementNS(NS, 'animate');
+        animR.setAttribute('attributeName', 'r');
+        animR.setAttribute('from', '2');
+        animR.setAttribute('to', r);
+        animR.setAttribute('dur', '0.9s');
+        animR.setAttribute('calcMode', 'spline');
+        animR.setAttribute('keySplines', '0.15 0.6 0.35 1');
+        animR.setAttribute('fill', 'freeze');
+
+        var animO = document.createElementNS(NS, 'animate');
+        animO.setAttribute('attributeName', 'opacity');
+        animO.setAttribute('from', '0.95');
+        animO.setAttribute('to', '0');
+        animO.setAttribute('dur', '0.9s');
+        animO.setAttribute('fill', 'freeze');
+
+        var animW = document.createElementNS(NS, 'animate');
+        animW.setAttribute('attributeName', 'stroke-width');
+        animW.setAttribute('from', '12');
+        animW.setAttribute('to', '0.5');
+        animW.setAttribute('dur', '0.9s');
+        animW.setAttribute('fill', 'freeze');
+
+        ring.appendChild(animR);
+        ring.appendChild(animO);
+        ring.appendChild(animW);
+        g.appendChild(ring);
+        layer.appendChild(g);
+
+        var removed = false;
+        function cleanup() {
+          if (removed) return;
+          removed = true;
+          if (g.parentNode) g.parentNode.removeChild(g);
+        }
+        animR.addEventListener('endEvent', cleanup);
+        setTimeout(cleanup, 1200);
+      }
+
+      letters.addEventListener('click', function (evt) {
+        var pos = toSvgPoint(evt);
+        spawnRipple(pos.x, pos.y);
+      });
+    })();
+  ]]></script>
 </svg>
